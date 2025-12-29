@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const companyController = require('./company.controller');
+const auth = require('../../middleware/auth');
 
-// Company routes will be defined here
-router.get('/', (req, res) => {
-  res.json({ message: 'Company routes' });
-});
+
+
+router.post('/', auth.verifyAdmin, companyController.createCompany);
+router.get('/me', auth.verifyUser, companyController.getMyCompanies);
+
 
 module.exports = router;
